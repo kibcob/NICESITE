@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мой сайт</title>
+    <style>
+        body {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .button {
+            background-color: green;
+            color: white;
+            padding: 30px 60px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 48px;
+            cursor: pointer;
+        }
+        
+        .fullscreen-image {
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none; /* Изначально скрыт */
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .fullscreen-image img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .overlay-text {
+            display: none; /* Изначально скрыт */
+            position: absolute;
+            z-index: 9999;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            color: red;
+            padding: 10px;
+            background-color: white;
+            border: 2px solid red;
+        }
+        
+        .show-overlay .overlay-text {
+            display: block;
+        }
+
+        .gif-animation {
+            position: absolute;
+            right: 10%;
+            top: 30%;
+            transform: translateY(-50%);
+            max-width: 200px;
+            max-height: 200px;
+            display: none; /* Изначально скрыт */
+        }
+        
+        .show-overlay .gif-animation {
+            display: block;
+        }
+
+        .new-gif {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1400px; /* Измените размеры гифки по вашему желанию */
+            height: 700px; /* Измените размеры гифки по вашему желанию */
+            z-index: 99999;
+            display: none;
+        }
+
+        .show-new-gif .new-gif {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <button class="button" onclick="showImage()">Убить Андрея Черткова</button>
+
+    <div id="fullscreenImageContainer" class="fullscreen-image">
+        <img id="fullscreenImage" src="" alt="Fullscreen Image">
+        <div id="overlayText" class="overlay-text"></div>
+        <img class="gif-animation" src="https://s11.gifyu.com/images/SW8C5.gif"> <!-- Здесь вставьте прямую ссылку на гиф-анимацию -->
+    </div>
+
+    <audio id="audioPlayer" loop>
+        <source src="" type="https://track.pinkamuz.pro/play/33b234313137303131893731353332b634b4300500/3b2f08f605b0b75a55a27dab4e1c83c1/8.mp3"> <!-- Здесь вставьте прямую ссылку на аудиофайл -->
+    </audio>
+
+    <script>
+        function showImage() {
+            var imageUrl = "https://i.ibb.co/dQB7n4g/jfif.jpg"; // Здесь задайте прямую ссылку на нужное фото
+            var audioUrl = "https://track.pinkamuz.pro/play/33b234313137303131893731353332b634b4300500/3b2f08f605b0b75a55a27dab4e1c83c1/8.mp3"; // Здесь вставьте прямую ссылку на аудиофайл
+            var fullscreenImage = document.getElementById("fullscreenImage");
+            var audioPlayer = document.getElementById("audioPlayer");
+
+            fullscreenImage.src = imageUrl;
+            audioPlayer.src = audioUrl;
+
+            document.getElementById("fullscreenImageContainer").style.display = "flex";
+            audioPlayer.play();
+
+            setTimeout(showOverlayText, 5000);
+            setTimeout(showNewGif, 10000);
+        }
+
+        function showOverlayText() {
+            var overlayText = document.getElementById("overlayText");
+            overlayText.innerHTML = "Твой IP - " + getUserIP() + ", тебе пиздец.";
+            document.getElementById("fullscreenImageContainer").classList.add("show-overlay");
+        }
+
+        function showNewGif() {
+            var newGifUrl = "https://s12.gifyu.com/images/SW8Ya.gif"; // Здесь вставьте прямую ссылку на новую гифку
+            var newGif = document.createElement("img");
+
+            newGif.classList.add("new-gif");
+            newGif.src = newGifUrl;
+
+            document.body.appendChild(newGif);
+            document.body.classList.add("show-new-gif");
+        }
+
+        function getUserIP() {
+            // Для получения IP адреса пользователя можно использовать сторонний сервис или API.
+            // В данном случае используется https://api.ipify.org
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://api.ipify.org?format=json", false);
+            xhr.send();
+
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                return response.ip;
+            } else {
+                return "Не удалось получить IP адрес";
+            }
+        }
+    </script>
+</body>
+</html>
